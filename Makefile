@@ -1,4 +1,4 @@
-PROJECT=app
+PROJECT=raspb-app
 OUTPUT=build
 
 OBJ=$(wildcard *.c)
@@ -13,3 +13,9 @@ $(PROJECT): $(OBJ)
 
 clean:
 	rm -rf $(OUTPUT)
+
+docker-build:
+	docker build -t $(PROJECT) .
+
+docker-run:
+	docker run -it $(PROJECT) /bin/bash
