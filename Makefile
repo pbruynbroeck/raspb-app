@@ -21,3 +21,6 @@ docker-run: docker-build
 clean: docker-build
 	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) $(PROJECT) rm -f /$(PROJECT)/$(OUTPUT)/$(PROJECT)
 	rm -rf $(OUTPUT)
+
+docker-it: docker-build
+	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) -it $(PROJECT)
