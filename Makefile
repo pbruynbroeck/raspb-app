@@ -1,5 +1,6 @@
 PROJECT=raspb-app
 OUTPUT=build
+PROJECT_DIR=$(shell pwd)
 
 OBJ=$(wildcard *.c)
 
@@ -11,11 +12,12 @@ $(OUTPUT):
 $(PROJECT): $(OBJ)
 	$(CC) $? -o $(OUTPUT)/$@
 
-clean:
-	rm -rf $(OUTPUT)
-
 docker-build:
 	docker build -t $(PROJECT) .
 
-docker-run:
-	docker run -it $(PROJECT) /bin/bash
+docker-run: docker-build
+	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) $(PROJECT) make -C raspb-app
+
+clean: docker-build
+	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) $(PROJECT) rm -f /$(PROJECT)/$(OUTPUT)/$(PROJECT)
+	rm -rf $(OUTPUT)
