@@ -6,7 +6,10 @@ CC=arm-linux-gnueabi-gcc
 
 OBJ=$(wildcard *.c)
 
-default: $(OUTPUT) $(PROJECT)
+default: docker-build
+	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) $(PROJECT) make -C raspb-app build
+
+build: $(OUTPUT) $(PROJECT)
 
 $(OUTPUT):
 	mkdir -p $@
@@ -16,9 +19,6 @@ $(PROJECT): $(OBJ)
 
 docker-build:
 	docker build -t $(PROJECT) .
-
-docker-run: docker-build
-	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) $(PROJECT) make -C raspb-app
 
 clean: docker-build
 	docker run -v $(PROJECT_DIR)/$(OUTPUT):/$(PROJECT)/$(OUTPUT) $(PROJECT) rm -f /$(PROJECT)/$(OUTPUT)/$(PROJECT)
