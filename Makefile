@@ -2,6 +2,8 @@ PROJECT=raspb-app
 OUTPUT=build
 PROJECT_DIR=$(shell pwd)
 
+CC=arm-linux-gnueabi-gcc
+
 OBJ=$(wildcard *.c)
 
 default: $(OUTPUT) $(PROJECT)

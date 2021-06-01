@@ -1,4 +1,5 @@
 FROM ubuntu:20.04
-RUN apt-get -y update
-RUN apt-get -y install build-essential
+RUN apt-get update && apt-get install -y \
+    make \
+    gcc-arm-linux-gnueabi
 COPY . raspb-app/
